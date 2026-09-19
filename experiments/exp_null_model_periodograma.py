@@ -94,10 +94,10 @@ def main():
         if (i + 1) % 100 == 0:
             print(f"  {i+1}/500")
     null_peaks = np.array(null_peaks)
-    print(f"  null_max: media={null_peaks.mean():.1f}, "
-          f"mediana={np.median(null_peaks):.1f}, "
-          f"p95={np.percentile(null_peaks, 95):.1f}, "
-          f"p99={np.percentile(null_peaks, 99):.1f}")
+    print(f"  null_max: media={null_peaks.mean():.4e}, "
+          f"mediana={np.median(null_peaks):.4e}, "
+          f"p95={np.percentile(null_peaks, 95):.4e}, "
+          f"p99={np.percentile(null_peaks, 99):.4e}")
 
     # ============================================================
     # 2. SIGNIFICANCIA EMPÍRICA de espectros CON señal
