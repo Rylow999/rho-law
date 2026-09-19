@@ -37,12 +37,25 @@ Cada dominio tiene un mecanismo que mantiene el sistema estable — y es medible
 | VSA | resonator puro (cleanup iterativo) | accuracy 1.0 en todo el grid |
 | NS (audit CAOS) | localización de capas | error λ_q⁻¹ |
 
-**El hallazgo clave de Collatz** (`experiments/exp_collatz_theorema.py`):
-el azar puro con la misma estructura (P=1/3 + racimos geométricos) **acumula**
-desviación (b≈0); Collatz **cancela** (b=−0.35). La equidistribución no es
-pasiva — es un **atractor del sustrato**. El teorema a buscar:
-*"|f_P − 1/3| decae como n^(−0.35) por órbita"* — si es asintótico, la
-divergencia es imposible y la conjetura cae como corolario.
+**El hallazgo clave de Collatz** (`experiments/exp_collatz_theorema.py`,
+100k órbitas con null model correcto):
+
+- **El null correcto** (P=1/3 + racimos geométricos, la misma estructura del
+  mapa) **SÍ cancela** la desviación como predice CLT: b = −0.472 ≈ −0.5.
+- **Collatz cancela MÁS LENTO**: b = −0.264 (vs medida invariante 0.324).
+- **GAP +0.21: Collatz acumula MÁS desviación que el azar equivalente** —
+  hay sustrato real en la desviación, no solo azar.
+- **La cola existe**: 135/100.000 órbitas (0.135%) con |f_P−1/3|>0.15 —
+  y TODAS convergen (ninguna divergencia real hasta n=2M).
+
+**El teorema a buscar (formulación corregida):** la acumulación sobre el
+azar es sustrato real; lo que falta es la **ACOTACIÓN**:
+
+> *|f_P − 1/3| ≤ C para toda órbita, con C < f_P* − 1/3 = 0.374*
+
+Esa acotación (si es cierta) + el umbral condicional = **la conjetura cae
+como corolario**. Es un enunciado de teoría ergódica estándar (acotación de
+la desviación de la medida invariante), más débil que LEH y más atacable.
 
 ## La tesis filosófica
 
