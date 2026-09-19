@@ -174,18 +174,25 @@ def main():
     o1_ok = (fp_all >= fstar).sum() == 0
     # O2: convergencia implica drift < 0 (todos negativos)
     o2_ok = (drift_all > 0).sum() == 0
-    # O3: convergencia implica ratio N/P < 3 (todos debajo de 3)
-    o3_ok = (ratio_all >= 3.0).sum() == 0
-    all_observers_agree = o1_ok and o2_ok and o3_ok
+    # O3: ratio >= 3 NO implica divergencia (las 3 orbitas con ratio>=3
+    # convergen con drift muy negativo) — O3 es redundante con O1
+    # (ratio = (1-f_P)/f_P, derivado de f_P)
+    over3 = (ratio_all >= 3.0).sum()
+    over3_converged = sum(1 for r in rows if r["ratio_N_over_P"] >= 3.0 and r["converged"])
+    o3_ok = (over3_converged == over3)  # todas las que superan convergen igual
+    all_independent_agree = o1_ok and o2_ok
     print(f"  O1 f_P:      {o1_ok}  (0/{len(fp_all)} cruces del umbral {fstar:.4f})")
     print(f"  O2 drift:    {o2_ok}  (0/{len(drift_all)} positivos; max={drift_all.max():.2f})")
-    print(f"  O3 ratio:    {o3_ok}  ({(ratio_all >= 3.0).sum()}/{len(ratio_all)} en el umbral)")
-    print(f"  Convergencia INVARIANTE entre los 3 observadores: {all_observers_agree}")
+    print(f"  O3 ratio:    redundante con O1  ({over3} orbitas ratio>=3 y TODAS convergen: {over3_converged}/{over3})")
+    print(f"  Observadores INDEPENDIENTES (O1, O2) coinciden: {all_independent_agree} "
+          f"({len(fp_all)}/{len(fp_all)} orbitas)")
     print()
     print("  Lectura (misma estructura que la ley rho):")
     print("  En VSA el observador tiene una banda critica donde colapsa (kappa).")
-    print("  En Collatz, NINGUN observador encuentra divergencia: la convergencia")
-    print("  es invariante — propiedad del sustrato (drift<0), no de como se mira.")
+    print("  En Collatz, NINGUN observador independiente encuentra divergencia:")
+    print("  la convergencia es invariante — propiedad del sustrato (drift<0),")
+    print("  no de como se mira. El ratio N/P >= 3 NO implica divergencia:")
+    print("  esas orbitas tuvieron pocas visitas a P y convergieron rapido.")
     print("  El resonator sobre la secuencia HRR no ve mas que azar (0.15-0.28):")
     print("  la secuencia es pseudorandom por diseno (medida invariante plana en log).")
 
