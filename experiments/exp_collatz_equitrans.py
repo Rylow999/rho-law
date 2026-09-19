@@ -148,14 +148,18 @@ def main():
     print(f"  Null:     b = {ncoef[0]:+.4f}")
     gap = coef[0] - ncoef[0]
     print(f"  GAP:      {gap:+.4f}")
-    if abs(coef[0] + 0.5) < 0.05:
-        print("  -> Collatz cancela el azar como 1/sqrt(n): LEH asintotica por-orbita")
-        print("     la divergencia seria IMPOSIBLE (conjetura cayendo)")
-    elif coef[0] > ncoef[0] + 0.05:
-        print("  -> Collatz CANCELA MENOS que el azar puro: hay sustrato que acumula")
-        print("     ahi puede vivir una orbita divergente (hueco real)")
+    # La comparacion correcta es Collatz vs NULL (no vs -0.5 teorico):
+    # el null con racimos geometricos NO es i.i.d. y ACUMULA desviacion.
+    if gap < -0.05:
+        print("  -> Collatz CANCELA la desviacion mas rapido que el azar puro:")
+        print("     la equidistribucion es un ATRACTOR (auto-correccion activa).")
+        print("     Si el exponente es asintotico, la divergencia es IMPOSIBLE:")
+        print("     ninguna orbita acumula desviacion para cruzar f_P*=0.7075.")
+        print(f"     Teorema a buscar: |f_P-0.5| ~ n^({coef[0]:.2f}) por orbita.")
+    elif abs(gap) <= 0.05:
+        print("  -> Collatz se comporta como el azar puro: sin auto-correccion.")
     else:
-        print("  -> Collatz se comporta como azar puro: sin estructura observable")
+        print("  -> Collatz ACUMULA mas desviacion que el azar: hueco real.")
 
     # 6. Figura
     fig, axes = plt.subplots(1, 2, figsize=(13, 5))
