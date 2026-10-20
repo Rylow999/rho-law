@@ -87,4 +87,4 @@ clases de observadores.
 - **Rylow999/paloma-pi-v2** — la aplicación en bioacústica real
 - **Rylow999/sddf** — Navier-Stokes (curvatura espectral)
 
-*Per aspera, ad astra.*
+*Per Aspera, Ad Astra.*
